@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
@@ -20,9 +16,8 @@ var SimpleCounter = React.createClass({
       if(value === null) {
         value = 0;
       }
-      console.log(parseInt(value));
+      console.log(Number.parseInt(value));
       this.setState({count: parseInt(value)});
-      //this.setState({count: parseInt(value)});
     }).done();
   },
   getInitialState: function() {
@@ -34,25 +29,28 @@ var SimpleCounter = React.createClass({
     this.setState({
       count: this.state.count + 1,
     });
+    this.saveData();
   },
   _onSubtract: function(){
     if(this.state.count > 0){
+      this.saveData();
       this.setState({
         count: this.state.count - 1,
       });
+      this.saveData();
     }
   },
   _onReset: function(){
     this.setState({
       count: 0,
     });
+    this.saveData();
   },
   saveData: function() {
-    AsyncStorage.setItem("count", '' + this.state.count);
+    console.log("saving: " + this.state.count);
+    AsyncStorage.setItem("count", "" + this.state.count);
   },
   render: function() {
-    this.saveData();
-    console.log(this.state.count);
     return (
       <View style={styles.container}>
         <Text style={styles.count}>
