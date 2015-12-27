@@ -103,4 +103,4 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('SimpleCounter', () => SimpleCounter);
+AppRegistry.registerComponent('Simple Counter', () => SimpleCounter);
