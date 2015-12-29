@@ -155,6 +155,7 @@ var styles = StyleSheet.create({
   },
   count: {
     fontSize: 100,
+    marginBottom: 30,
   },
   roundbuttoncircle: {
     width: 120,
@@ -247,7 +248,7 @@ var styles = StyleSheet.create({
     marginTop: -7,
   },
   resetText: {
-    fontSize: 20,
+    fontSize: 30,
     justifyContent: 'center',
     textAlign: 'center',
     backgroundColor: 'rgba(0,0,0,0)',
@@ -264,6 +265,7 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: 'rgba(0,0,0,0)',
     marginBottom: 20,
+    //paddingBottom: 50,
   },
 });
 
