@@ -8,6 +8,8 @@ var {
   View,
   TouchableHighlight,
   AsyncStorage,
+  PixelRatio,
+  Dimensions,
 } = React;
 
 var SimpleCounter = React.createClass({
@@ -26,6 +28,7 @@ var SimpleCounter = React.createClass({
   getInitialState: function() {
     return {
       count: 0,
+      areYouSure: false,
     };
   },
   _onAdd: function(){
@@ -57,15 +60,48 @@ var SimpleCounter = React.createClass({
     this.saveData();
   },
   _areYouSure: function() {
-    if(this.state.areYouSure) {
       return(
-          <View>
-            <Text>
-            asdf
-            </Text>
-          </View>
+            <View style={styles.youSureContainer}>
+              <Text style={styles.areYouSureText}>
+                Are you sure?
+              </Text>
+              <View style={styles.buttons}>
+                <TouchableHighlight onPress={this._onYesReset} style={styles.areyousure}>
+                  <Text style={styles.youSureText}>
+                    Yes
+                  </Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={this._onNoReset} style={styles.areyousure}>
+                  <Text style={styles.youSureText}>
+                    No
+                  </Text>
+                </TouchableHighlight>
+              </View>
+            </View>
       );
-    }
+  },
+  _onNoReset: function() {
+      this.setState({
+        areYouSure: false,
+      });
+  },
+  _onYesReset: function() {
+      this.setState({
+        count: 0,
+        areYouSure: false,
+      });
+      this.saveData();
+  },
+  _reset: function() {
+      return(
+        <View style={styles.youSureContainer}>
+          <TouchableHighlight onPress={this._onReset} style={styles.roundbuttonreset}>
+            <Text style={styles.resetText}>
+              Reset
+            </Text>
+          </TouchableHighlight>
+        </View>
+      );
   },
   saveData: function() {
     console.log("saving: " + this.state.count);
@@ -89,12 +125,7 @@ var SimpleCounter = React.createClass({
             </Text>
           </TouchableHighlight>
         </View>
-        <TouchableHighlight onPress={this._onReset} style={styles.roundbuttonreset}>
-          <Text style={styles.resetText}>
-            Reset
-          </Text>
-        </TouchableHighlight>
-        {this._areYouSure}
+        {this.state.areYouSure ? this._areYouSure() : this._reset()}
       </View>
     );
   }
@@ -106,6 +137,17 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  youSureContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    //alignSelf: 'flex-end'
+    //justifyContent: 'flex-end',
+    //alignItems: 'flex-end',
+    bottom: 0,
+    //flex: .1,
+    position: 'absolute',
   },
   count: {
     fontSize: 100,
@@ -121,18 +163,36 @@ var styles = StyleSheet.create({
         alignSelf: 'auto',
         marginHorizontal: 5,
   },
-  roundbuttonreset: {
-        width: 80,
-        height: 80,
-        borderRadius: 150 / 2,
+  areyousure: {
+        width: 120,
+        height: 120,
+        //borderRadius: 150 / 2,
         backgroundColor: '#4679BD',
         justifyContent: 'center',
         borderColor: '#cfdcec',
-        borderWidth: 10,
+        alignSelf: 'auto',
+        marginHorizontal: 5,
+        bottom: 0,
         //flexDirection: 'column',
         //flex: 1,
         //alignItems: 'center',
         //flexDirection: 'row',
+  },
+  roundbuttonreset: {
+        height: 100,
+        width: Dimensions.get('window').width,
+        //height: PixelRatio.get(),
+        //height: 80,
+        //borderRadius: 150 / 2,
+        backgroundColor: '#4679BD',
+        justifyContent: 'center',
+        //borderColor: '#cfdcec',
+        //borderWidth: 10,
+        //flexDirection: 'column',
+        //flex: 1,
+        //alignItems: 'center',
+        //flexDirection: 'row',
+        alignItems: 'stretch',
   },
   buttons: {
         height: 200,
@@ -149,6 +209,12 @@ var styles = StyleSheet.create({
   },
   resetText: {
     fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  youSureText: {
+    fontSize: 30,
     justifyContent: 'center',
     textAlign: 'center',
     backgroundColor: 'rgba(0,0,0,0)',
