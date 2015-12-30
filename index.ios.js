@@ -58,27 +58,6 @@ var SimpleCounter = React.createClass({
     });
     this.saveData();
   },
-  _areYouSure: function() {
-      return(
-            <View style={styles.youSureContainer}>
-              <Text style={styles.areYouSureText}>
-                Are you sure?
-              </Text>
-              <View style={styles.youSureButtons}>
-                <TouchableHighlight onPress={this._onYesReset} style={styles.areyousureyes}>
-                  <Text style={styles.youSureText}>
-                    Yes
-                  </Text>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={this._onNoReset} style={styles.areyousureno}>
-                  <Text style={styles.youSureText}>
-                    No
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </View>
-      );
-  },
   _onNoReset: function() {
       this.setState({
         areYouSure: false,
@@ -91,6 +70,31 @@ var SimpleCounter = React.createClass({
       });
       this.saveData();
   },
+  saveData: function() {
+    console.log("saving: " + this.state.count);
+    AsyncStorage.setItem("count", "" + this.state.count);
+  },
+  _areYouSure: function() {
+      return(
+        <View style={styles.youSureContainer}>
+          <Text style={styles.youSureText}>
+            Are you sure?
+          </Text>
+          <View style={styles.youSureButtons}>
+            <TouchableHighlight onPress={this._onYesReset} style={styles.yesButton}>
+              <Text style={styles.resetText}>
+                Yes
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={this._onNoReset} style={styles.noButton}>
+              <Text style={styles.resetText}>
+                No
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      );
+  },
   _reset: function() {
       return(
         <View style={styles.youSureContainer}>
@@ -102,10 +106,6 @@ var SimpleCounter = React.createClass({
         </View>
       );
   },
-  saveData: function() {
-    console.log("saving: " + this.state.count);
-    AsyncStorage.setItem("count", "" + this.state.count);
-  },
   render: function() {
     return (
       <View style={styles.container}>
@@ -113,13 +113,13 @@ var SimpleCounter = React.createClass({
           {this.state.count}
         </Text>
         <View style={styles.buttons}>
-          <TouchableHighlight onPress={this._onSubtract} style={styles.roundbuttoncircle}>
-            <Text style={styles.middleText}>
+          <TouchableHighlight onPress={this._onSubtract} style={styles.circleButton}>
+            <Text style={styles.buttonText}>
               -
             </Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={this._onAdd} style={styles.roundbuttoncircle}>
-            <Text style={styles.middleText}>
+          <TouchableHighlight onPress={this._onAdd} style={styles.circleButton}>
+            <Text style={styles.buttonText}>
               +
             </Text>
           </TouchableHighlight>
@@ -150,7 +150,7 @@ var styles = StyleSheet.create({
     fontSize: 100,
     marginBottom: 30,
   },
-  roundbuttoncircle: {
+  circleButton: {
     width: 120,
     height: 120,
     borderRadius: 150 / 2,
@@ -161,7 +161,7 @@ var styles = StyleSheet.create({
     alignSelf: 'auto',
     marginHorizontal: 15,
   },
-  areyousureyes: {
+  yesButton: {
     width: Dimensions.get('window').width / 2,
     height: 100,
     backgroundColor: '#4679BD',
@@ -172,7 +172,7 @@ var styles = StyleSheet.create({
     flexWrap: 'nowrap',
     borderRightWidth: 2,
   },
-  areyousureno: {
+  noButton: {
     width: Dimensions.get('window').width / 2,
     height: 100,
     backgroundColor: '#4679BD',
@@ -198,7 +198,7 @@ var styles = StyleSheet.create({
     overflow: 'visible',
     flexDirection: 'row',
   },
-  middleText: {
+    buttonText: {
     fontSize: 50,
     justifyContent: 'center',
     textAlign: 'center',
@@ -212,12 +212,6 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0)',
   },
   youSureText: {
-    fontSize: 30,
-    justifyContent: 'center',
-    textAlign: 'center',
-    backgroundColor: 'rgba(0,0,0,0)',
-  },
-  areYouSureText: {
     fontSize: 20,
     justifyContent: 'center',
     textAlign: 'center',
