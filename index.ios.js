@@ -81,14 +81,14 @@ var SimpleCounter = React.createClass({
             Are you sure?
           </Text>
           <View style={styles.youSureButtons}>
-            <TouchableHighlight onPress={this._onYesReset} style={styles.yesButton}>
-              <Text style={styles.resetText}>
-                Yes
-              </Text>
-            </TouchableHighlight>
             <TouchableHighlight onPress={this._onNoReset} style={styles.noButton}>
               <Text style={styles.resetText}>
                 No
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight onPress={this._onYesReset} style={styles.yesButton}>
+              <Text style={styles.resetText}>
+                Yes
               </Text>
             </TouchableHighlight>
           </View>
@@ -170,7 +170,7 @@ var styles = StyleSheet.create({
     alignSelf: 'auto',
     alignItems: 'stretch',
     flexWrap: 'nowrap',
-    borderRightWidth: 2,
+    borderLeftWidth: 2,
   },
   noButton: {
     width: Dimensions.get('window').width / 2,
@@ -181,7 +181,7 @@ var styles = StyleSheet.create({
     alignSelf: 'auto',
     alignItems: 'stretch',
     flexWrap: 'nowrap',
-    borderLeftWidth: 2,
+    borderRightWidth: 2,
   },
   roundbuttonreset: {
     height: 100,
